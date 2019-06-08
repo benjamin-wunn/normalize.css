@@ -1,21 +1,57 @@
 /*! normalize.scss v8.0.1.min | MIT License | github.com/benjaminwunn/normalize.scss */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
+  font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba($black, 0);
+}
+
+details, article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+  display: block;
+}
+
+caption {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: inherit;
+  text-align: left;
+  caption-side: bottom;
+}
+
+figure {
+  margin: 0 0 1rem;
 }
 
 body {
   margin: 0;
+  font-family: $font-family-base;
+  @include font-size($font-size-base);
+  font-weight: $font-weight-base;
+  line-height: $line-height-base;
+  color: $body-color;
+  text-align: left;
+  background-color: $body-bg;
 }
 
-main {
-  display: block;
+[tabindex="-1"]:focus {
+  outline: 0 !important;
 }
 
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
 }
 
 hr {
@@ -24,19 +60,48 @@ hr {
   overflow: visible;
 }
 
-pre {
-  font-family: monospace, monospace;
-  font-size: 1em;
-}
-
 a {
   background-color: transparent;
+
+  &:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      color: inherit;
+      text-decoration: none;
+
+      &:focus {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
 }
 
-abbr[title] {
-  border-bottom: none;
-  text-decoration: underline;
-  text-decoration: underline dotted;
+abbr {
+  &[title],
+  &[data-original-title] {
+    text-decoration: underline;
+    text-decoration: underline dotted;
+    cursor: help;
+    border-bottom: 0;
+    text-decoration-skip-ink: none;
+  }
+}
+
+address {
+  margin-bottom: 1rem;
+  font-style: normal;
+  line-height: inherit;
+}
+
+blockquote {
+  margin: 0 0 1rem;
 }
 
 b,
@@ -44,11 +109,38 @@ strong {
   font-weight: bolder;
 }
 
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+
+  ol,
+  ul,
+  dl {
+    margin-bottom: 0;
+  }
+}
+
+dt {
+  font-weight: bolder;
+}
+
+dd {
+  margin-bottom: .5rem;
+  margin-left: 0;
+}
+
+pre,
 code,
 kbd,
 samp {
   font-family: monospace, monospace;
   font-size: 1em;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  overflow: auto;
+
 }
 
 small {
@@ -72,6 +164,7 @@ sup {
 }
 
 img {
+  vertical-align: middle;
   border-style: none;
 }
 
@@ -81,8 +174,8 @@ optgroup,
 select,
 textarea {
   font-family: inherit;
-  font-size: 100%;
-  line-height: 1.15;
+  font-size: inherit;
+  line-height: inherit;
   margin: 0;
 }
 
@@ -94,13 +187,32 @@ input {
 button,
 select {
   text-transform: none;
+  word-wrap: normal;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: $label-margin-bottom;
+}
+
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+table {
+  border-collapse: collapse;
 }
 
 button,
+.button,
+.btn,
 [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
+  cursor: pointer;
+  border-radius: 0;
 
   &::-moz-focus-inner {
     border-style: none;
@@ -110,18 +222,33 @@ button,
   &:-moz-focusring {
     outline: 1px dotted ButtonText;
   }
+
+  &:focus {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
 }
 
 fieldset {
-  padding: 0.35em 0.75em 0.625em;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+th {
+  text-align: inherit;
 }
 
 legend {
-  box-sizing: border-box;
-  color: inherit;
-  display: table;
+  display: block;
+  width: 100%;
   max-width: 100%;
   padding: 0;
+  margin-bottom: .5rem;
+  font-size: 1.5rem;
+  line-height: inherit;
+  color: inherit;
   white-space: normal;
 }
 
@@ -131,6 +258,14 @@ progress {
 
 textarea {
   overflow: auto;
+  resize: vertical;
+}
+
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"] {
+  -webkit-appearance: listbox;
 }
 
 [type="checkbox"],
@@ -147,7 +282,7 @@ textarea {
 }
 
 [type="search"] {
-  -webkit-appearance: textfield;
+  -webkit-appearance: none;
   outline-offset: -2px;
 
   &::-webkit-search-decoration {
@@ -160,12 +295,9 @@ textarea {
   font: inherit;
 }
 
-details {
-  display: block;
-}
-
 summary {
   display: list-item;
+  cursor: pointer;
 }
 
 template {
@@ -173,5 +305,5 @@ template {
 }
 
 [hidden] {
-  display: none;
+  display: none !important;
 }
